@@ -112,7 +112,7 @@ def plot_bmi_scatter_smoker(df):
     """
     print("[I] Plotting BMI vs. Charge Rate by Smoker/Non-Smoker.")
     _, ax = plt.subplots()
-    scatterplot(data=df, x='bmi', y='charges', ax=ax, hue='smoker')
+    scatterplot(data=df, x=Columns.BMI, y=Columns.FACT, ax=ax, hue='smoker')
     ax.set_ylabel('Charges [USD]')
     ax.set_xlabel('BMI [kg/m²]')
     ax.set_title('Charges vs. BMI Plot for Smokers and Non-Smokers')
@@ -153,7 +153,7 @@ def plot_children_by_region(df):
     """
     print("[I] Plotting Average Number of Children for Different Regions.")
     _, ax = plt.subplots()
-    barplot(data=df, y='region', x='children', ax=ax, palette='Set1', ci=None)
+    barplot(data=df, y=Columns.LOC, x=Columns.KIDS, ax=ax, palette='Set1', ci=None)
     ax.set_title("Average No. of Children for Different Regions")
     ax.set_xlim((0, 1.5))
 
