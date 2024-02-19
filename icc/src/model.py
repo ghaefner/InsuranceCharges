@@ -130,7 +130,7 @@ class Task_Model:
     def __init__(self, df):
         self.df = df
 
-    def run():
+    def run(self):
         start_time = time.time()
         print("[I]: Info\n [W]: Warning\n [E]: Error")
         print("[I] Starting Model Training Task.")
@@ -139,7 +139,7 @@ class Task_Model:
         run_random_forest_regressor(self.df)
 
         end_time = time.time()
-        print(f'[I] Done in {end_time-start_time: .4f} seconds.')
+        print(f'[I] Task finished in {end_time-start_time: .4f} seconds.')
     
 
 
