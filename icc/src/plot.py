@@ -191,7 +191,7 @@ class Task_EDA:
 
     def run(self):
         print("[I]: Info\n [W]: Warning\n [E]: Error")
-        print("[I] Starting Exploratory Data Analysis.")
+        print("[I] Starting Exploratory Data Analysis Task.")
         
         plot_average_bmi_sex(self.df)
         plot_smoker_rate(self.df)
