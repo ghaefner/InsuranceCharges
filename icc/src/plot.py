@@ -189,7 +189,7 @@ class Task_EDA:
     def __init__(self, df):
         self.df = df
 
-    def execute(self):
+    def run(self):
         print("[I]: Info\n [W]: Warning\n [E]: Error")
         print("[I] Starting Exploratory Data Analysis.")
         
