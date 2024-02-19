@@ -12,3 +12,11 @@ class Columns:
     SMOKER = "smoker"
     LOC = "region"
     FACT = "charges"
+
+class HyperPars:
+    N_ESTIMATOR = 10
+    MAX_DEPTH = 20
+    MIN_SAMPLES_LEAF = 5
+    MIN_SAMPLES_SPLIT= 5
+    RANDOM_STATE = 42
+    TEST_SIZE = 20
