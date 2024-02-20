@@ -77,6 +77,7 @@ def perform_cross_validation(df, model):
     print("[I] Mean R2 score for train: ", sum(cv_scores_train)/5)
     print("[I] Mean R2 score for test: ", sum(cv_scores_test)/5)
     print("[I] Done.")
+    
 
 def evaluate_model(df, model):
     """
@@ -99,7 +100,9 @@ def evaluate_model(df, model):
     print(f'[I] The Absolute Mean Error on the Test Data is {abs_error:,.2f}.')
     print("[I] Done.")
 
-def run_random_forest_regressor(df, HyperPars=HyperPars):
+    return r2
+
+def run_random_forest_regressor(df, hyper_parameters=HyperPars):
     """
     Runs Random Forest Regressor model.
 
@@ -107,11 +110,11 @@ def run_random_forest_regressor(df, HyperPars=HyperPars):
         df (DataFrame): Input DataFrame containing features and target.
         HyperPars (class): Class containing hyperparameters. Default is HyperPars.
     """
-    model_rf = RandomForestRegressor(n_estimators=HyperPars.N_ESTIMATOR,
-                                     max_depth=HyperPars.MAX_DEPTH,
-                                     min_samples_leaf=HyperPars.MIN_SAMPLES_LEAF,
-                                     min_samples_split=HyperPars.MIN_SAMPLES_SPLIT,
-                                     random_state=HyperPars.RANDOM_STATE)
+    model_rf = RandomForestRegressor(n_estimators=hyper_parameters.N_ESTIMATOR,
+                                     max_depth=hyper_parameters.MAX_DEPTH,
+                                     min_samples_leaf=hyper_parameters.MIN_SAMPLES_LEAF,
+                                     min_samples_split=hyper_parameters.MIN_SAMPLES_SPLIT,
+                                     random_state=hyper_parameters.RANDOM_STATE)
     perform_cross_validation(df, model=model_rf)
     evaluate_model(df, model_rf)
 
@@ -130,13 +133,13 @@ class TaskModel:
     def __init__(self, df):
         self.df = df
 
-    def run(self, hyperparameters):
+    def run(self, hyper_parameters):
         start_time = time.time()
         print("[I]: Info\n [W]: Warning\n [E]: Error")
         print("[I] Starting Model Training Task.")
 
         print("[I] Running Random Forest Regressor.")
-        run_random_forest_regressor(self.df, hyperparameters=HyperPars)
+        run_random_forest_regressor(self.df, hyper_parameters=HyperPars)
 
         end_time = time.time()
         print(f'[I] Task finished in {end_time-start_time: .4f} seconds.')
