@@ -190,7 +190,7 @@ class TaskEDA:
         self.df = df
 
     def run(self):
-        print("[I]: Info\n [W]: Warning\n [E]: Error")
+        print("[I]: Info\n[W]: Warning\n[E]: Error")
         print("[I] Starting Exploratory Data Analysis Task.")
         
         plot_average_bmi_sex(self.df)

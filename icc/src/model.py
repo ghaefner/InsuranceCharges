@@ -135,7 +135,7 @@ class TaskModel:
 
     def run(self, hyper_parameters):
         start_time = time.time()
-        print("[I]: Info\n [W]: Warning\n [E]: Error")
+        print("[I]: Info\n[W]: Warning\n[E]: Error")
         print("[I] Starting Model Training Task.")
 
         print("[I] Running Random Forest Regressor.")
