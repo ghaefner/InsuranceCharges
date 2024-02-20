@@ -126,7 +126,7 @@ def run_knn(df):
     perform_cross_validation(df, model_knn)
     evaluate_model(df, model_knn)
 
-class Task_Model:
+class TaskModel:
     def __init__(self, df):
         self.df = df
 
