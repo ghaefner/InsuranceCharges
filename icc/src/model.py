@@ -139,7 +139,7 @@ class TaskModel:
         print("[I] Starting Model Training Task.")
 
         print("[I] Running Random Forest Regressor.")
-        run_random_forest_regressor(self.df, hyper_parameters=HyperPars)
+        run_random_forest_regressor(self.df, hyper_parameters=hyper_parameters)
 
         end_time = time.time()
         print(f'[I] Task finished in {end_time-start_time: .4f} seconds.')
