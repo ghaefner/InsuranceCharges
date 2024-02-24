@@ -5,7 +5,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.model_selection import KFold
-from sklearn.metrics import r2_score, mean_absolute_error
+from sklearn.pipeline import make_pipeline
+from sklearn.svm import SVR
+from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 import time
 
 
@@ -129,6 +131,17 @@ def run_knn(df):
     perform_cross_validation(df, model_knn)
     evaluate_model(df, model_knn)
 
+def run_SVM(df):
+    """
+    Runs Supported Vector Machine Regressor model.
+
+    Args:
+        df (DataFrame): Input DataFrame containing features and target.
+    """
+    model_svm = make_pipeline(StandardScaler(), SVR())
+    evaluate_model(df=df, model=model_svm)
+
+
 class TaskModel:
     def __init__(self, df):
         self.df = df
@@ -140,6 +153,13 @@ class TaskModel:
 
         print("[I] Running Random Forest Regressor.")
         run_random_forest_regressor(self.df, hyper_parameters=hyper_parameters)
+
+        print("[I] Running KNN Regressor.")
+        run_knn(self.df, hyper_parameters=hyper_parameters)
+
+
+        print("[I] Running Supported Vector Machine.")
+        run_SVM(self.df)
 
         end_time = time.time()
         print(f'[I] Task finished in {end_time-start_time: .4f} seconds.')

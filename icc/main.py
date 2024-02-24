@@ -13,3 +13,4 @@ task_model = TaskModel(df=_dataframe)
 
 # task_eda.run()
 task_model.run(hyper_parameters=HyperPars)
+
