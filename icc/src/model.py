@@ -120,14 +120,14 @@ def run_random_forest_regressor(df, hyper_parameters=HyperPars):
     perform_cross_validation(df, model=model_rf)
     evaluate_model(df, model_rf)
 
-def run_knn(df):
+def run_knn(df, NN=4):
     """
     Runs K Nearest Neighbors Regressor model.
 
     Args:
         df (DataFrame): Input DataFrame containing features and target.
     """
-    model_knn = KNeighborsRegressor(n_neighbors=4)
+    model_knn = KNeighborsRegressor(n_neighbors=NN)
     perform_cross_validation(df, model_knn)
     evaluate_model(df, model_knn)
 
@@ -155,8 +155,7 @@ class TaskModel:
         run_random_forest_regressor(self.df, hyper_parameters=hyper_parameters)
 
         print("[I] Running KNN Regressor.")
-        run_knn(self.df, hyper_parameters=hyper_parameters)
-
+        run_knn(self.df, NN=hyper_parameters.N_NEIGHBORS)
 
         print("[I] Running Supported Vector Machine.")
         run_SVM(self.df)

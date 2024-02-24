@@ -20,3 +20,5 @@ class HyperPars:
     MIN_SAMPLES_SPLIT= 5
     RANDOM_STATE = 42
     TEST_SIZE = 20
+
+    N_NEIGHBORS = 4
