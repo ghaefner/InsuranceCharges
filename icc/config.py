@@ -14,11 +14,18 @@ class Columns:
     FACT = "charges"
 
 class HyperPars:
+    # General Parameters
     N_ESTIMATOR = 10
+    RANDOM_STATE = 42 
+    TEST_SIZE = 20
+
+    # Logistic Regressor
     MAX_DEPTH = 20
     MIN_SAMPLES_LEAF = 5
     MIN_SAMPLES_SPLIT= 5
-    RANDOM_STATE = 42
-    TEST_SIZE = 20
-
+    
+    # KNN
     N_NEIGHBORS = 4
+
+    # Gradient Booster
+    LEARNING_RATE = 0.01
