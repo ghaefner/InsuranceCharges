@@ -79,8 +79,8 @@ def perform_cross_validation(df, model):
         cv_scores_train.append(model.score(train, train_targets))
         cv_scores_test.append(model.score(test, test_targets))
     
-    logging.info(f"Mean R2 score for train: {sum(cv_scores_train)/5:%f}." )
-    logging.info(f"Mean R2 score for test: {sum(cv_scores_test)/5:%f}.")
+    logging.info(f"Mean R2 score for train: {sum(cv_scores_train)/5:.2f}." )
+    logging.info(f"Mean R2 score for test: {sum(cv_scores_test)/5:.2f}.")
     logging.info("Done.")
     
 
@@ -99,10 +99,10 @@ def evaluate_model(df, model):
     logging.info("Calculate Prediction on Test Data.")
     y_pred = model.predict(X_test)
     r2 = r2_score(y_test, y_pred)
-    logging.info(f"R2 Score on the Test Data is {r2:%.2f}.")
+    logging.info(f"R2 Score on the Test Data is {r2:.2f}.")
 
     abs_error = mean_absolute_error(y_test, y_pred)
-    logging.info("The Absolute Mean Error on the Test Data is %,.2f.", abs_error)
+    logging.info(f"The Absolute Mean Error on the Test Data is {abs_error:.2f}.")
     logging.info("Done.")
 
     return r2
@@ -163,4 +163,4 @@ class TaskModel:
         run_SVM(self.df)
 
         end_time = time.time()
-        logging.info(f"Task finished in {end_time-start_time}:%.4f seconds.")
+        logging.info(f"Task finished in {end_time-start_time:.4f} seconds.")
