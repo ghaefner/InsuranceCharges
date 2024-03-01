@@ -3,7 +3,7 @@ from config import Columns, HyperPars
 from pandas import get_dummies
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.model_selection import KFold
 from sklearn.pipeline import make_pipeline
@@ -145,6 +145,22 @@ def run_SVM(df):
     evaluate_model(df=df, model=model_svm)
 
 
+def run_gradient_boosting(df, hyper_parameters=HyperPars):
+    """
+    Runs Gradient Boosting Regressor model.
+
+    Args:
+        df (DataFrame): Input DataFrame containing features and target.
+        HyperPars (class): Class containing hyperparameters. Default is HyperPars.
+    """
+    model_gb = GradientBoostingRegressor(n_estimators=hyper_parameters.N_ESTIMATOR,
+                                          max_depth=hyper_parameters.MAX_DEPTH,
+                                          learning_rate=hyper_parameters.LEARNING_RATE,
+                                          random_state=hyper_parameters.RANDOM_STATE)
+    perform_cross_validation(df, model=model_gb)
+    evaluate_model(df, model_gb)
+
+
 class TaskModel:
     def __init__(self, df):
         self.df = df
@@ -161,6 +177,9 @@ class TaskModel:
 
         logging.info("Running Supported Vector Machine.")
         run_SVM(self.df)
+
+        logging.info("Running Gradient Boosting Regressor.")
+        run_gradient_boosting(self.df, hyper_parameters=hyper_parameters)
 
         end_time = time.time()
         logging.info(f"Task finished in {end_time-start_time:.4f} seconds.")
