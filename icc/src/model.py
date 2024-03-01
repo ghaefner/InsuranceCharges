@@ -1,4 +1,5 @@
-from config import Columns,HyperPars
+import logging
+from config import Columns, HyperPars
 from pandas import get_dummies
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -10,6 +11,8 @@ from sklearn.svm import SVR
 from sklearn.metrics import r2_score, mean_absolute_error
 import time
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
 
 def prepare_model(df, test_size=HyperPars.TEST_SIZE, random_state=HyperPars.RANDOM_STATE):
     """
@@ -23,22 +26,22 @@ def prepare_model(df, test_size=HyperPars.TEST_SIZE, random_state=HyperPars.RAND
     Returns:
         tuple: X_train, X_test, y_train, y_test
     """
-    print("[I] Preparing DataFrame for Model.")
+    logging.info("Preparing DataFrame for Model.")
     df[Columns.SEX] = df[Columns.SEX].apply(lambda sex: 1 if sex=='female' else 0)
     df = get_dummies(df)
 
     X = df.drop(Columns.FACT, axis=1)
     y = df[Columns.FACT]
 
-    print("[I] Splitting Model into Train and Test.")
+    logging.info("Splitting Model into Train and Test.")
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
 
-    print(f'[I] Training Set Shape: {X_train.shape}.')
-    print(f'[I] Testing Set Shape: {X_test.shape}.')
+    logging.info(f'Training Set Shape: {X_train.shape}.')
+    logging.info(f'Testing Set Shape: {X_test.shape}.')
 
     sc = StandardScaler()
 
-    print("[I] Transforming Numerical Columns using Standard Scaler.")
+    logging.info("Transforming Numerical Columns using Standard Scaler.")
     X_train[[Columns.AGE, Columns.BMI]] = sc.fit_transform(X_train[[Columns.AGE, Columns.BMI]])
     X_test[[Columns.AGE, Columns.BMI]] = sc.transform(X_test[[Columns.AGE, Columns.BMI]])
 
@@ -47,7 +50,7 @@ def prepare_model(df, test_size=HyperPars.TEST_SIZE, random_state=HyperPars.RAND
     y_train = y_train.reset_index(drop=True)
     y_test = y_test.reset_index(drop=True)
 
-    print("[I] Done.")
+    logging.info("Done.")
 
     return X_train, X_test, y_train, y_test
 
@@ -61,12 +64,12 @@ def perform_cross_validation(df, model):
     """
     X_train, _, y_train, _ = prepare_model(df)
 
-    print("[I] Performing Cross Validation.")
+    logging.info("Performing Cross Validation.")
     kf = KFold(n_splits=5)
     cv_scores_train = []
     cv_scores_test = []
 
-    print("[I] Fitting Model.")
+    logging.info("Fitting Model.")
     for train_indices, test_indices in kf.split(X_train):
         train = X_train.iloc[train_indices,:]
         train_targets = y_train.iloc[train_indices]
@@ -76,9 +79,9 @@ def perform_cross_validation(df, model):
         cv_scores_train.append(model.score(train, train_targets))
         cv_scores_test.append(model.score(test, test_targets))
     
-    print("[I] Mean R2 score for train: ", sum(cv_scores_train)/5)
-    print("[I] Mean R2 score for test: ", sum(cv_scores_test)/5)
-    print("[I] Done.")
+    logging.info("Mean R2 score for train: %f", sum(cv_scores_train)/5)
+    logging.info("Mean R2 score for test: %f", sum(cv_scores_test)/5)
+    logging.info("Done.")
     
 
 def evaluate_model(df, model):
@@ -89,18 +92,18 @@ def evaluate_model(df, model):
         df (DataFrame): Input DataFrame containing features and target.
         model (object): Trained model object.
     """
-    print("[I] Running Validated Model.")
+    logging.info("Running Validated Model.")
     X_train, X_test, y_train, y_test = prepare_model(df)
     model.fit(X_train, y_train)
 
-    print("[I] Calculate Prediction on Test Data.")
+    logging.info("Calculate Prediction on Test Data.")
     y_pred = model.predict(X_test)
     r2 = r2_score(y_test, y_pred)
-    print(f'[I] R2 Score on the Test Data is {r2:.2f}.')
+    logging.info("R2 Score on the Test Data is %.2f.", r2)
 
     abs_error = mean_absolute_error(y_test, y_pred)
-    print(f'[I] The Absolute Mean Error on the Test Data is {abs_error:,.2f}.')
-    print("[I] Done.")
+    logging.info("The Absolute Mean Error on the Test Data is %,.2f.", abs_error)
+    logging.info("Done.")
 
     return r2
 
@@ -148,20 +151,17 @@ class TaskModel:
 
     def run(self, hyper_parameters):
         start_time = time.time()
-        print("[I]: Info\n[W]: Warning\n[E]: Error")
-        print("[I] Starting Model Training Task.")
+        logging.info("Info\nWarning\nError")
+        logging.info("Starting Model Training Task.")
 
-        print("[I] Running Random Forest Regressor.")
+        logging.info("Running Random Forest Regressor.")
         run_random_forest_regressor(self.df, hyper_parameters=hyper_parameters)
 
-        print("[I] Running KNN Regressor.")
+        logging.info("Running KNN Regressor.")
         run_knn(self.df, NN=hyper_parameters.N_NEIGHBORS)
 
-        print("[I] Running Supported Vector Machine.")
+        logging.info("Running Supported Vector Machine.")
         run_SVM(self.df)
 
         end_time = time.time()
-        print(f'[I] Task finished in {end_time-start_time: .4f} seconds.')
-    
-
-
+        logging.info("Task finished in %.4f seconds.", end_time-start_time)
