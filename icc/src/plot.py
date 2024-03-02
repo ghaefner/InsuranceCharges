@@ -2,6 +2,7 @@ import logging
 import matplotlib.pyplot as plt
 from seaborn import barplot, histplot, scatterplot
 from config import Config, Columns
+from src.api import read_data
 
 logging.basicConfig(level=logging.INFO)
 
@@ -117,8 +118,9 @@ def plot_charge_by_region(df):
     logging.info("Done.")
 
 class TaskEDA:
-    def __init__(self, df):
-        self.df = df
+    def __init__(self, conf=Config):
+        self.file_path = conf.PATH_TO_DATA
+        self.df = read_data(self.file_path)
 
     def run(self):
         logging.info("Starting Exploratory Data Analysis Task.")
