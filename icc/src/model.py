@@ -1,5 +1,5 @@
 import logging
-from config import Columns, HyperPars
+from config import Columns, HyperPars, Config
 from pandas import get_dummies
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -10,6 +10,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.svm import SVR
 from sklearn.metrics import r2_score, mean_absolute_error
 import time
+from src.api import read_data
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -162,8 +163,9 @@ def run_gradient_boosting(df, hyper_parameters=HyperPars):
 
 
 class TaskModel:
-    def __init__(self, df):
-        self.df = df
+    def __init__(self, conf=Config):
+        self.file_path = conf.PATH_TO_DATA
+        self.df = read_data(self.file_path)
 
     def run(self, hyper_parameters):
         start_time = time.time()
