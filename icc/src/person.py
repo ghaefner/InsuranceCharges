@@ -51,6 +51,7 @@ class Person:
         region_dict = {"region_" + location: res for location, res in zip(locations, match_location)}
         
         data = {
+            Columns.ID: [1],
             Columns.AGE: [self._age],
             Columns.SEX: [self._sex],
             Columns.BMI: [self._bmi],
@@ -59,7 +60,7 @@ class Person:
         }
         data.update(region_dict)
 
-        return DataFrame(data)
+        return DataFrame(data, index=[1])
 
     def predict_charges(self, model):
         """
@@ -71,6 +72,7 @@ class Person:
         Returns:
             float: Predicted insurance charges.
         """
-        charges_pred = model.predict(self.data)
+        df_reordered = self.data[model.feature_names_in_] 
+        charges_pred = model.predict(df_reordered)
 
         return charges_pred[0]
