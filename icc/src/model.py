@@ -185,3 +185,28 @@ class TaskModel:
 
         end_time = time.time()
         logging.info(f"Task finished in {end_time-start_time:.4f} seconds.")
+
+    def get_train_model(self, model_name="RandomForest", hyper_parameters=HyperPars):
+        """
+        Trains and returns the specified model.
+
+        Args:
+            model_name (str): Name of the model to be trained.
+            hyper_parameters (object): Hyperparameters object. Default is None.
+
+        Returns:
+            object: Trained model object.
+        """
+        if model_name == 'RandomForest':
+            model = RandomForestRegressor(
+                n_estimators=hyper_parameters.N_ESTIMATOR,
+                max_depth=hyper_parameters.MAX_DEPTH,
+                min_samples_leaf=hyper_parameters.MIN_SAMPLES_LEAF,
+                min_samples_split=hyper_parameters.MIN_SAMPLES_SPLIT,
+                random_state=hyper_parameters.RANDOM_STATE
+            )
+        
+        X_train, _, y_train, _ = prepare_model(self.df)
+        model.fit(X_train, y_train)
+
+        return model
