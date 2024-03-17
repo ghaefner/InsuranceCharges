@@ -1,3 +1,6 @@
+from config import Columns
+from pandas import DataFrame
+
 class Person:
     def __init__(self, age, sex, bmi, children, smoker, region):
         self._age = age
@@ -26,5 +29,26 @@ class Person:
     def set_region(self, region):
         self._region = region
 
-    def get_charges(self):
-        pass
+    def predict_charges(self, model):
+        """
+        Predicts insurance charges for the person using the trained model.
+
+        Args:
+            model (object): Trained model object.
+
+        Returns:
+            float: Predicted insurance charges.
+        """
+        data = {
+            Columns.AGE: [self._age],
+            Columns.SEX: [self._sex],
+            Columns.BMI: [self._bmi],
+            Columns.KIDS: [self._children],
+            Columns.SMOKER: [self._smoker],
+            Columns.LOC: [self._region]
+        }
+        
+        data = DataFrame(data)
+        charges_pred = model.predict(data)
+
+        return charges_pred[0]
