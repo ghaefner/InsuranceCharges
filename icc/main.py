@@ -1,7 +1,8 @@
-from src.model import TaskModel
+from src.model import TaskModel, evaluate_model
 from src.plot import TaskEDA
 from src.person import Person
-from config import HyperPars, Config
+from config import HyperPars, Config, Columns
+import pandas as pd
 
 # Initialize Task Classes
 # task_eda = TaskEDA(conf=Config)
@@ -14,5 +15,9 @@ task_model = TaskModel(conf=Config)
 # task_model.run(hyper_parameters=HyperPars)
 mod = task_model.get_train_model()
 
-p1 = Person(25, "male", 24.5, 0, False, "southwest")
-p1.predict_charges(mod)
+print(mod)
+
+p1 = Person(25, "male", 24.5, 0, False, "southeast")
+# p1.predict_charges(mod)
+
+print(p1.predict_charges(mod))
