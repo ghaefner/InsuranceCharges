@@ -13,6 +13,13 @@ class Columns:
     LOC = "region"
     FACT = "charges"
 
+    class REGION:
+        NW = "northwest"
+        SW = "southwest"
+        NE = "northeast"
+        SE = "southeast"
+        ALL = [NW, SW, NE, SE]
+
 class HyperPars:
     # General Parameters
     N_ESTIMATOR = 10
