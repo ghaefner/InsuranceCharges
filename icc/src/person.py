@@ -10,7 +10,7 @@ class Person:
         self._smoker = smoker
         self._region = region
 
-        self.df = self.set_df(self)
+        self.data = self.set_df(self)
 
     # Setter functions
     def set_age(self, age):
