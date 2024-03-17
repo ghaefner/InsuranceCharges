@@ -10,6 +10,8 @@ class Person:
         self._smoker = smoker
         self._region = region
 
+        self.df = self.set_df(self)
+
     # Setter functions
     def set_age(self, age):
         self._age = age
@@ -29,6 +31,36 @@ class Person:
     def set_region(self, region):
         self._region = region
 
+    def set_df(self):
+        if self._sex == "male":
+            self._sex = 0
+        else:
+            self._sex = 1
+        
+        if self._smoker == "yes":
+            self._smoker = 1
+        else:
+            self._smoker = 0
+
+        locations = Columns.REGION.ALL
+
+        if self._region not in locations:
+            ValueError("No valid location used. Please use 'northwest', 'northeast', 'southwest' or 'southeast'.")
+        
+        match_location = [1 if location == self._region else 0 for location in locations]
+        region_dict = {"region_" + location: res for location, res in zip(locations, match_location)}
+        
+        data = {
+            Columns.AGE: [self._age],
+            Columns.SEX: [self._sex],
+            Columns.BMI: [self._bmi],
+            Columns.KIDS: [self._children],
+            Columns.SMOKER: [self._smoker],
+        }
+        data.update(region_dict)
+
+        return DataFrame(data)
+
     def predict_charges(self, model):
         """
         Predicts insurance charges for the person using the trained model.
@@ -39,16 +71,6 @@ class Person:
         Returns:
             float: Predicted insurance charges.
         """
-        data = {
-            Columns.AGE: [self._age],
-            Columns.SEX: [self._sex],
-            Columns.BMI: [self._bmi],
-            Columns.KIDS: [self._children],
-            Columns.SMOKER: [self._smoker],
-            Columns.LOC: [self._region]
-        }
-        
-        data = DataFrame(data)
-        charges_pred = model.predict(data)
+        charges_pred = model.predict(self.data)
 
         return charges_pred[0]
