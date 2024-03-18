@@ -1,8 +1,8 @@
 import logging
 import matplotlib.pyplot as plt
 from seaborn import barplot, histplot, scatterplot
-from config import Config, Columns
-from src.api import read_data
+from icc.config import Config, Columns
+from icc.src.api import read_data
 
 logging.basicConfig(level=logging.INFO)
 

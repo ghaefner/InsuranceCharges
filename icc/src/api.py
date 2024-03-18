@@ -1,5 +1,5 @@
 from pandas import read_csv, DataFrame
-from config import Config, Columns
+from icc.config import Config, Columns
 
 def read_data(file_path=Config.PATH_TO_DATA) -> DataFrame:
     df = read_csv(file_path)

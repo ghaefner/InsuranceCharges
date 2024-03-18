@@ -1,4 +1,4 @@
-from config import Columns
+from icc.config import Columns
 from pandas import DataFrame
 
 class Person:
