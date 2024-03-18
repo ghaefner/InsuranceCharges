@@ -162,7 +162,7 @@ def run_gradient_boosting(df, hyper_parameters=HyperPars):
     evaluate_model(df, model_gb)
 
 
-class TaskModel:
+class Model:
     def __init__(self, conf=Config):
         self.file_path = conf.PATH_TO_DATA
         self.df = read_data(self.file_path)

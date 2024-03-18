@@ -117,7 +117,7 @@ def plot_charge_by_region(df):
     ax.figure.savefig(Config.PATH_TO_PLOT_FOLDER+"avg_charge_by_region.png")
     logging.info("Done.")
 
-class TaskEDA:
+class Plot:
     def __init__(self, conf=Config):
         self.file_path = conf.PATH_TO_DATA
         self.df = read_data(self.file_path)
