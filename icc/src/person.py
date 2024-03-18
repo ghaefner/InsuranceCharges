@@ -1,5 +1,6 @@
 from icc.config import Columns
 from pandas import DataFrame
+import logging
 
 class Person:
     def __init__(self, age, sex, bmi, children, smoker, region):
@@ -74,5 +75,7 @@ class Person:
         """
         df_reordered = self.data[model.feature_names_in_] 
         charges_pred = model.predict(df_reordered)
+
+        logging.info(f"Insurances charges amount to {charges_pred[0]} USD.")
 
         return charges_pred[0]
