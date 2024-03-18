@@ -1,5 +1,5 @@
 import logging
-from config import Columns, HyperPars, Config
+from icc.config import Columns, HyperPars, Config
 from pandas import get_dummies
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -10,7 +10,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.svm import SVR
 from sklearn.metrics import r2_score, mean_absolute_error
 import time
-from src.api import read_data
+from icc.src.api import read_data
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -205,6 +205,21 @@ class TaskModel:
                 min_samples_split=hyper_parameters.MIN_SAMPLES_SPLIT,
                 random_state=hyper_parameters.RANDOM_STATE
             )
+
+        elif model_name == "GradientBooster":
+            model = GradientBoostingRegressor(n_estimators=hyper_parameters.N_ESTIMATOR,
+                                          max_depth=hyper_parameters.MAX_DEPTH,
+                                          learning_rate=hyper_parameters.LEARNING_RATE,
+                                          random_state=hyper_parameters.RANDOM_STATE)
+        
+        elif model_name == "KNN":
+            model = KNeighborsRegressor(n_neighbors=hyper_parameters.N_NEIGHBORS)
+
+        elif model_name == "SVM":
+            model = make_pipeline(StandardScaler(), SVR())
+
+        else:
+            ValueError("No valid model name. Please enter RandomForest, GradientBooster, KNN or SVM.")
         
         X_train, _, y_train, _ = prepare_model(self.df)
         model.fit(X_train, y_train)
