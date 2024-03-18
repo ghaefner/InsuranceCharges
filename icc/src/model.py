@@ -124,7 +124,7 @@ def run_random_forest_regressor(df, hyper_parameters=HyperPars):
     perform_cross_validation(df, model=model_rf)
     evaluate_model(df, model_rf)
 
-def run_knn(df, NN=4):
+def run_knn(df, NN=HyperPars.N_NEIGHBORS):
     """
     Runs K Nearest Neighbors Regressor model.
 
