@@ -1,7 +1,7 @@
-from src.model import TaskModel, evaluate_model
-from src.plot import TaskEDA
-from src.person import Person
-from config import HyperPars, Config, Columns
+from icc.src.model import TaskModel, evaluate_model
+from icc.src.plot import TaskEDA
+from icc.src.person import Person
+from icc.config import HyperPars, Config, Columns
 import pandas as pd
 
 # Initialize Task Classes
