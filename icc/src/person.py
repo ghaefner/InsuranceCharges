@@ -76,6 +76,6 @@ class Person:
         df_reordered = self.data[model.feature_names_in_] 
         charges_pred = model.predict(df_reordered)
 
-        logging.info(f"Insurances charges amount to {charges_pred[0]} USD.")
+        logging.info(f"Insurances charges amount to {charges_pred[0]:.2f} USD.")
 
         return charges_pred[0]
